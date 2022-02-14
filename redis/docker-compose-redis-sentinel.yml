@@ -1,0 +1,57 @@
+version: "3"
+services:
+  redis7101:
+    image: redis
+    container_name: redis7101
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - 7101:7101
+    volumes:
+      - ./redis-sentinel/7101/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis-sentinel/7101/data:/data
+  redis7102:
+    image: redis
+    container_name: redis7102
+    ports:
+      - 7102:7102
+    command: redis-server /usr/local/etc/redis/redis.conf --slaveof redis7101 7101
+    volumes:
+      - ./redis-sentinel/7102/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis-sentinel/7102/data:/data
+  redis7103:
+    image: redis
+    container_name: redis7103
+    ports:
+      - 7103:7103
+    command: redis-server /usr/local/etc/redis/redis.conf --slaveof redis7101 7101
+    volumes:
+      - ./redis-sentinel/7103/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis-sentinel/7103/data:/data
+
+  redis7201:
+    image: redis
+    container_name: redis7201
+    ports:
+      - 7201:7201
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./redis-sentinel/7201/conf/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-sentinel/7201/tmp:/tmp
+  redis7202:
+    image: redis
+    container_name: redis7202
+    ports:
+      - 7202:7202
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./redis-sentinel/7202/conf/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-sentinel/7202/tmp:/tmp
+  redis7203:
+    image: redis
+    container_name: redis7203
+    ports:
+      - 7203:7203
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./redis-sentinel/7203/conf/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./redis-sentinel/7203/tmp:/tmp

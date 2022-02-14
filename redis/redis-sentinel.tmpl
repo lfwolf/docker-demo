@@ -1,0 +1,11 @@
+#端口号
+port ${PORT}
+dir /tmp
+# mymaster：自定义集群名，2:投票数量必须2个sentinel才能判断主节点是否失败
+sentinel monitor mymaster 192.168.3.35 7101 2
+# 指的是超过5秒，且没有回复，则判定主节点不可达
+sentinel down-after-milliseconds mymaster 5000
+# 表示在故障转移的时候最多有numslaves在同步更新新的master
+sentinel parallel-syncs mymaster 1
+# 故障转移超时时间
+sentinel failover-timeout mymaster 5000
