@@ -2,8 +2,8 @@
 redis.call('select',0)
 redis.replicate_commands()
 --需要删除的hash集合名称
-local mapName="bigkeyhash"
-local myCursor=tonumber(KEYS[1])
+local mapName=KEYS[1]
+local myCursor=tonumber(KEYS[2])
 local loop=1
 while(loop>0)
 do
